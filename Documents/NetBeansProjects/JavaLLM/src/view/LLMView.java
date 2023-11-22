@@ -1,5 +1,5 @@
 package view;
 
-public class LLMView {
+abstract class LLMView {
     
 }
