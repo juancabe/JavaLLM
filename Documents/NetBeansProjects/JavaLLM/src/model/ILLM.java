@@ -1,5 +1,6 @@
 package model;
 
-class ILLM {
-    
+interface ILLM {
+   String speak(String string);
+   String getIdentifier();
 }
