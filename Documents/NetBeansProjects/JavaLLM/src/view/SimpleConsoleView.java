@@ -6,8 +6,7 @@ public class SimpleConsoleView extends ApplicationView{
 
     @Override
     public void showApplicationStart(String initInfo) {
-        String out = "Bienvenido a jLLM!\n";
-        out(out);
+        out(initInfo);
     }
 
     @Override
@@ -43,8 +42,7 @@ public class SimpleConsoleView extends ApplicationView{
 
     @Override
     public void showApplicationEnd(String endInfo) {
-        String out = "Hasta luego!\n";
-        out(out);
+        out(endInfo);
     }
     
     protected void out(String out){
