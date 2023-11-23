@@ -6,7 +6,7 @@ public abstract class ApplicationView {
     
     ApplicationController controller;
     
-    abstract void showApplicationStart(String initInfo);
-    abstract void showMainMenu();
-    abstract void showApplicationEnd(String endInfo);
+    public abstract void showApplicationStart(String initInfo);
+    public abstract void showMainMenu();
+    public abstract void showApplicationEnd(String endInfo);
 }
