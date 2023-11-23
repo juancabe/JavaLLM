@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-interface IRepository {
+public interface IRepository {
     List<Conversation> importConversations();
     void exportConversation(List<Conversation> conversations);
 }

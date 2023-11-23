@@ -2,7 +2,7 @@ package model;
 
 public class ApplicationModel {
     
-    ILLM LanModelObject;
-    IRepository RepObject;
-    
+    ILLM LanModel;
+    IRepository Repo;
+       
 }
