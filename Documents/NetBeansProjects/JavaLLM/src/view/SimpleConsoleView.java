@@ -1,9 +1,14 @@
 package view;
 
 import static com.coti.tools.Esdia.readInt;
+import controller.ApplicationController;
 
 public class SimpleConsoleView extends ApplicationView{
 
+    public SimpleConsoleView(ApplicationController controller) {
+        super(controller);
+    }
+   
     @Override
     public void showApplicationStart(String initInfo) {
         out(initInfo);

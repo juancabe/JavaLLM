@@ -1,13 +1,16 @@
 package controller;
 
+import model.ApplicationModel;
 import view.ApplicationView;
 
 public class ApplicationController {
     
     ApplicationView view;
+    ApplicationModel model;
     
-    public ApplicationController(ApplicationView view){
+    public ApplicationController(ApplicationView view, ApplicationModel model){
         this.view = view;
+        this.model = model;
     }
     
     public void appInit(){
@@ -20,6 +23,10 @@ public class ApplicationController {
     
     public void appEnd(){
         view.showApplicationEnd("Adios!");
+    }
+    
+    public void setView(ApplicationView view){
+        this.view = view;
     }
     
 }

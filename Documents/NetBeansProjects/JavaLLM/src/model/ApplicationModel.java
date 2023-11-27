@@ -2,7 +2,12 @@ package model;
 
 public class ApplicationModel {
     
-    ILLM LanModel;
-    IRepository Repo;
+    ILLM lanModel;
+    IRepository repo;
+    
+    public ApplicationModel(IRepository repo, ILLM lanModel){
+        this.repo = repo;
+        this.lanModel = lanModel;
+    }
        
 }
