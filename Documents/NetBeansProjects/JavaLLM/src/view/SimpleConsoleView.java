@@ -30,13 +30,13 @@ public class SimpleConsoleView extends ApplicationView{
         
         switch(opcion){
             case 1:
-                nuevaConversacion();
+                newConversation();
                 break;
             case 2:
-                listarEliminarConversaciones();
+                listEliminateConversations();
                 break;
             case 3:
-                importarExportarConversaciones();
+                importExportConversations();
                 break;
             default:
                 String out = "Error inesperado\n";
@@ -54,16 +54,46 @@ public class SimpleConsoleView extends ApplicationView{
         System.out.print(out);
     }
 
-    private void nuevaConversacion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void newConversation() {
+        String out;
+        controller.newConversation();
+        out = "\n\n---Nueva Conversacion---\n";
+        out(out);
+        
+        
     }
 
-    private void listarEliminarConversaciones() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void listEliminateConversations() {
+        
+        int opcion;
+        
+        do{
+        String out = """
+                     ---Eliminar o listar Conversaciones---
+                     1) Eliminar Conversaciones
+                     2) Listar Conversaciones
+                     """;
+                    out(out);
+                    opcion = readInt("");
+        }while(opcion<1 || opcion>2);
+        
     }
 
-    private void importarExportarConversaciones() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void importExportConversations() {
+        
+        int opcion;
+        
+        do{
+        String out = """
+                     ---Importar o exportar Conversaciones---
+                     1) Importar Conversaciones
+                     2) Exportar Conversaciones
+                     """;
+                    out(out);
+                    opcion = readInt("");
+        }while(opcion<1 || opcion>2);
+        
+        
     }
     
 }

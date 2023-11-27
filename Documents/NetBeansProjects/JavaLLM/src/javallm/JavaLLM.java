@@ -8,9 +8,10 @@ import model.*;
 public class JavaLLM {
 
     public static void main(String[] args) {
-        ApplicationModel model = null;
+        ApplicationModel model;
+        ApplicationController controller;
         ApplicationView view = null;
-        ApplicationController controller = null;
+        
         
         if(args.length != 3){
             JSONImportExport repo = new JSONImportExport();

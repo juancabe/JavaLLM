@@ -2,6 +2,12 @@ package model;
 
 public class CSVLLM implements ILLM {
 
+    private final String indentifier;
+
+    public CSVLLM() {
+        this.indentifier = "CSVLLM";
+    }
+    
     @Override
     public String speak(String string) {
         return null;
@@ -9,7 +15,7 @@ public class CSVLLM implements ILLM {
 
     @Override
     public String getIdentifier() {
-        return null;
+        return indentifier;
     }
 
 }

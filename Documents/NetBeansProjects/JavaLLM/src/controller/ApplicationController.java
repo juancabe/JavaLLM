@@ -28,5 +28,9 @@ public class ApplicationController {
     public void setView(ApplicationView view){
         this.view = view;
     }
+
+    public boolean newConversation() {
+        return model.newConversation();
+    }
     
 }
