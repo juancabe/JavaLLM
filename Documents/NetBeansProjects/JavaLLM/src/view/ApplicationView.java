@@ -11,6 +11,6 @@ public abstract class ApplicationView {
     }
     
     public abstract void showApplicationStart(String initInfo);
-    public abstract void showMainMenu();
+    public abstract boolean showMainMenu();
     public abstract void showApplicationEnd(String endInfo);
 }

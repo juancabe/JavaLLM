@@ -7,6 +7,7 @@ import model.*;
 
 public class JavaLLM {
 
+    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
         ApplicationModel model;
         ApplicationController controller;
@@ -75,7 +76,7 @@ public class JavaLLM {
         }
         
         view.showApplicationStart("Hola!!!");
-        view.showMainMenu();
+        while(view.showMainMenu());
     
     }
     

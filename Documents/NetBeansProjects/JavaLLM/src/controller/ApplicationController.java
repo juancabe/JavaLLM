@@ -32,5 +32,13 @@ public class ApplicationController {
     public boolean newConversation() {
         return model.newConversation();
     }
+
+    public String getLLMId() {
+        return model.getLLMId();
+    }
+    
+    public String getNewMensaje(String opcion){
+        return model.getNewMessage(opcion);
+    }
     
 }

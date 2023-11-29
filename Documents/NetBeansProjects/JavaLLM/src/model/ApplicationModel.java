@@ -12,8 +12,16 @@ public class ApplicationModel {
     }
 
     public boolean newConversation() {
-        Conversation conversation = new Conversation(lanModel.getIdentifier());
+        conversation = new Conversation(lanModel.getIdentifier());
         return true;
+    }
+
+    public String getNewMessage(String opcion) {
+        return lanModel.speak(opcion);
+    }
+
+    public String getLLMId() {
+        return conversation.getLLMIdentifier();
     }
        
 }

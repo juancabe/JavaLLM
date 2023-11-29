@@ -1,6 +1,6 @@
 package view;
 
-import static com.coti.tools.Esdia.readInt;
+import static com.coti.tools.Esdia.*;
 import controller.ApplicationController;
 
 public class SimpleConsoleView extends ApplicationView{
@@ -15,7 +15,7 @@ public class SimpleConsoleView extends ApplicationView{
     }
 
     @Override
-    public void showMainMenu() {
+    public boolean showMainMenu() {
         int opcion;
         do{
             String out = "\n\n";
@@ -23,10 +23,14 @@ public class SimpleConsoleView extends ApplicationView{
                     + "1) Nueva Conversación\n"
                     + "2) Listar/Eliminar conversaciones\n"
                     + "3) Importar/Exportar conversaciones\n"
+                    + "4) Salir"
                     + "Introduzca una opción: ";
             out(out);
             opcion = readInt("");
-        }while(opcion<1 || opcion>3);
+            if(opcion == 4){
+                return false;
+            }
+        }while(opcion<1 || opcion>4);
         
         switch(opcion){
             case 1:
@@ -43,6 +47,7 @@ public class SimpleConsoleView extends ApplicationView{
                 out(out);
                 showMainMenu();
         }
+        return true;
     }
 
     @Override
@@ -55,11 +60,19 @@ public class SimpleConsoleView extends ApplicationView{
     }
 
     private void newConversation() {
+        String opcion ;
         String out;
         controller.newConversation();
         out = "\n\n---Nueva Conversacion---\n";
         out(out);
-        
+        do{ 
+            out = "";
+            opcion = readString("Usuario: ");
+            out += controller.getLLMId() + ": ";
+            out += controller.getNewMensaje(opcion) + "\n";
+            out(out);
+            
+        }while(!opcion.equals("/salir"));
         
     }
 
