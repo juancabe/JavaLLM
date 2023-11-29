@@ -23,7 +23,7 @@ public class SimpleConsoleView extends ApplicationView{
                     + "1) Nueva Conversación\n"
                     + "2) Listar/Eliminar conversaciones\n"
                     + "3) Importar/Exportar conversaciones\n"
-                    + "4) Salir"
+                    + "4) Salir\n"
                     + "Introduzca una opción: ";
             out(out);
             opcion = readInt("");
@@ -72,7 +72,7 @@ public class SimpleConsoleView extends ApplicationView{
             out += controller.getNewMensaje(opcion) + "\n";
             out(out);
             
-        }while(!opcion.equals("/salir"));
+        }while(!opcion.toLowerCase().equals("/salir"));
         
     }
 

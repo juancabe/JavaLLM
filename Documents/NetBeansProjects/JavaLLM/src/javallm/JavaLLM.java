@@ -16,7 +16,7 @@ public class JavaLLM {
         
         if(args.length != 3){
             JSONImportExport repo = new JSONImportExport();
-            SmartILLM lanModel = new SmartILLM();
+            CSVLLM lanModel = new CSVLLM();
             
             model = new ApplicationModel(repo, lanModel);
             view = null;
