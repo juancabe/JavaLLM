@@ -68,11 +68,21 @@ public class SimpleConsoleView extends ApplicationView{
         do{ 
             out = "";
             opcion = readString("Usuario: ");
+            if(opcion.toLowerCase().equals("/salir")){
+                continue;
+            }
             out += controller.getLLMId() + ": ";
-            out += controller.getNewMensaje(opcion) + "\n";
+            try{
+                out += controller.getNewMensaje(opcion) + "\n";
+            } catch (Exception e) {
+                out += "Lo siento, no se que decir. Ha fallado algo.";
+                System.err.println(e.getMessage());
+            }
             out(out);
             
         }while(!opcion.toLowerCase().equals("/salir"));
+        
+        controller.endConversation();
         
     }
 

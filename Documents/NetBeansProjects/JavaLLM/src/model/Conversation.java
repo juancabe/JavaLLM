@@ -7,7 +7,7 @@ import java.util.List;
 public class Conversation {
     
     private String LLMIdentifier;
-    private List<Message> messagesArray;
+    private ArrayList<Message> messagesArray;
     private double initEpochSeconds;
     private double endEpochSeconds;
 
@@ -31,6 +31,12 @@ public class Conversation {
 
     public double getEndEpochSeconds() {
         return endEpochSeconds;
+    }
+    
+    public void addMessage(String sender, String string){
+        
+        Message message = new Message(sender, string);
+        messagesArray.add(message);
     }
     
 }

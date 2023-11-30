@@ -37,8 +37,12 @@ public class ApplicationController {
         return model.getLLMId();
     }
     
-    public String getNewMensaje(String opcion){
+    public String getNewMensaje(String opcion) throws Exception{
         return model.getNewMessage(opcion);
+    }
+
+    public void endConversation() {
+        model.endConversation();
     }
     
 }

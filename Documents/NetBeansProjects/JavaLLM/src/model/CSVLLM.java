@@ -16,7 +16,7 @@ public class CSVLLM implements ILLM {
     }
     
     @Override
-    public String speak(String string) {
+    public String speak(String string) throws Exception {
         return getRandomStrFromCsv();
     }
 
@@ -25,16 +25,12 @@ public class CSVLLM implements ILLM {
         return indentifier;
     }
 
-    private String getRandomStrFromCsv() {
+    private String getRandomStrFromCsv() throws Exception {
         String csvFilePath = "DataFiles/input.csv"; // Reemplaza con la ruta correcta de tu archivo CSV
 
-        try {
-            List<String> phrases = readCSV(csvFilePath);
-            if (!phrases.isEmpty()) {
-                return getRandomPhrase(phrases);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<String> phrases = readCSV(csvFilePath);
+        if (!phrases.isEmpty()) {
+            return getRandomPhrase(phrases);
         }
         
         return "";
@@ -59,12 +55,13 @@ public class CSVLLM implements ILLM {
                 }
             }
         }
+        
         return phrases;
     }
     
-    private static String getRandomPhrase(List<String> phrases) {
+    private static String getRandomPhrase(List<String> phrases) throws Exception {
         if (phrases.isEmpty()) {
-            return null;
+            throw new Exception("No phrases, line 64 model.CSVLLM");
         }
 
         Random random = new Random();
