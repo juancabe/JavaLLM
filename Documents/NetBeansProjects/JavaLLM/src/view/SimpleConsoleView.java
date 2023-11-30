@@ -2,6 +2,9 @@ package view;
 
 import static com.coti.tools.Esdia.*;
 import controller.ApplicationController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SimpleConsoleView extends ApplicationView{
 
@@ -100,6 +103,60 @@ public class SimpleConsoleView extends ApplicationView{
                     opcion = readInt("");
         }while(opcion<1 || opcion>2);
         
+       if(opcion == 1){
+           eliminateConversation();
+       }
+       else if(opcion == 2){
+           String out = listConversations();
+           out(out);
+       }
+        
+    }
+    
+    private void eliminateConversation(){
+        String out;
+        if(controller.getNumOfConversations() < 1){
+            out = "No hay conversaciones disponibles";
+            out(out);
+        } else{
+            out = "Conversaciones disponibles para eliminar: 1-" 
+                + Integer.toString(controller.getNumOfConversations())
+                + "\nIngrese la que quiere eliminar (0 para salir): ";
+            out(out);
+            int opcion;
+            do{
+                opcion = readInt("");
+            }while(opcion < 0 || opcion > controller.getNumOfConversations());
+            
+            if(opcion == 0){
+                out = "Saliendo...\n";
+                out(out);
+                return;
+            }
+            controller.eliminateConversation(opcion);
+            out = "Conversación eliminada con éxito!\n";
+            out(out);
+        }
+    }
+    
+    private String listConversations(){
+        
+        String out = "\n\n";
+        
+        if(controller.getNumOfConversations() == 0){
+            out = "No hay conversaciones disponibles!";
+            return out;
+            
+        }
+        
+        for(int i = 0; i < controller.getNumOfConversations(); i++){
+            out += controller.getConversationInitTime(i) + " | ";
+            out += controller.getConversationNumMessages(i) + " | ";
+            out += controller.getConversationFirst20Char(i) + "\n";
+        }
+        out += "\n";
+        return out;
+        
     }
 
     private void importExportConversations() {
@@ -116,7 +173,44 @@ public class SimpleConsoleView extends ApplicationView{
                     opcion = readInt("");
         }while(opcion<1 || opcion>2);
         
+        if(opcion == 1){
+            importConversations();
+        }
+        else{
+            exportConversations();
+        }
         
+        
+    }
+
+    private void importConversations() {
+        String out = "Importando conversaciones...\n";
+        try {
+            controller.importConversations();
+            out += "Importación realizada con éxito.\n\n";
+            out(out);
+        } catch (IOException ex) {
+            out += "Error en la importación de las conversaciones.\n";
+            out += "Compruebe la existencia del archivo input."
+                    + controller.getIEType()
+                    + " en una carpeta llamada jLLM en su escritorio.\n\n";
+            out(out);
+            System.err.println("Mensaje de error: " + ex.getMessage());
+        }
+    }
+
+    private void exportConversations() {
+        String out = "Exportando conversaciones...\n";
+        try {
+            controller.exportConversations();
+            out += "Exportación realizada con éxito.\n\n";
+            out(out);
+        } catch (IOException ex) {
+            out += "Error en la exportación de las conversaciones\n";
+            out += "¿Existe la carpeta jLLM en su escritorio?";
+            out(out);
+            System.err.println("Mensaje de error: " + ex.getMessage());
+        }
     }
     
 }

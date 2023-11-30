@@ -1,5 +1,6 @@
 package model;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IRepository {
@@ -18,8 +19,8 @@ public interface IRepository {
             "jLLM" +
             System.getProperty("file.separator") +
             "input.";
-    
-    void setFilesVarible();
-    List<Conversation> importConversations();
-    void exportConversation(List<Conversation> conversations);
+    public String getIEType();
+    void setFilesVariable();
+    List<Conversation> importConversations() throws IOException;
+    void exportConversations(List<Conversation> conversations) throws IOException;
 }

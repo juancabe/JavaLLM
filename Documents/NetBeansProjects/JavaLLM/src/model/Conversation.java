@@ -1,16 +1,23 @@
 package model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Conversation {
     
-    private String LLMIdentifier;
-    private ArrayList<Message> messagesArray;
+    private List<Message> messagesArray;
     private double initEpochSeconds;
     private double endEpochSeconds;
+    @JacksonXmlProperty(localName = "llmidentifier")
+    private String LLMIdentifier;
 
+    public Conversation() {
+        // Constructor sin argumentos
+    }
+    
     public Conversation(String LLMIdentifier){
         this.LLMIdentifier = LLMIdentifier;
         this.messagesArray = new ArrayList<>();
@@ -31,6 +38,10 @@ public class Conversation {
 
     public double getEndEpochSeconds() {
         return endEpochSeconds;
+    }
+    
+    public void setEndEpoch(){
+        this.endEpochSeconds = Instant.now().getEpochSecond();
     }
     
     public void addMessage(String sender, String string){

@@ -14,6 +14,10 @@ public class Message {
         this.content = content;
     }
 
+    public Message(){
+        
+    }
+    
     public String getSender() {
         return sender;
     }

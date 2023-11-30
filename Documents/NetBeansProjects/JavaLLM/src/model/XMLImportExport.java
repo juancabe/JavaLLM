@@ -13,8 +13,12 @@ public class XMLImportExport implements IRepository {
     private String dirExport;
     private String dirImport;
     
+    public XMLImportExport(){
+        setFilesVariable();
+    }
+    
     @Override
-    public List<Conversation> importConversations() {
+    public List<Conversation> importConversations() throws IOException {
         ObjectMapper mapper = new XmlMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -22,27 +26,31 @@ public class XMLImportExport implements IRepository {
             File file = new File(dirImport);
             return mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Conversation.class));
         } catch (IOException e) {
-            // Manejar la excepción según tu lógica de manejo de errores
-            return null;
+            throw e;
         }
     }
 
     @Override
-    public void exportConversation(List<Conversation> conversations) {
+    public void exportConversations(List<Conversation> conversations) throws IOException {
         ObjectMapper mapper = new XmlMapper();
 
         try {
             File file = new File(dirExport);
             mapper.writeValue(file, conversations);
         } catch (IOException e) {
-            // Manejar la excepción según tu lógica de manejo de errores
-            
+            throw e;
         }
     }
 
-    public void setFilesVarible() {
+    @Override
+    public void setFilesVariable() {
         dirExport = IRepository.exportPathNoExt + "xml";
         dirImport = IRepository.importPathNoExt + "xml";
+    }
+    
+    @Override
+    public String getIEType() {
+        return "xml";
     }
     
 }

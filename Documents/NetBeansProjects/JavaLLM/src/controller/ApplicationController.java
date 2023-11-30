@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import model.ApplicationModel;
 import view.ApplicationView;
 
@@ -44,5 +45,38 @@ public class ApplicationController {
     public void endConversation() {
         model.endConversation();
     }
+
+    public int getNumOfConversations() {
+        return model.getNumOfConversations();
+    }
+
+    public String getConversationInitTime(int i) {
+        return model.getConversationInitTime(i);
+    }
+
+    public String getConversationNumMessages(int i) {
+        return model.getConversationNumMessages(i);
+    }
+
+    public String getConversationFirst20Char(int i) {
+        return model.getConversationFirst20Char(i);
+    }
+
+    public void eliminateConversation(int opcion) {
+        model.eliminateConversation(opcion);
+    }
+    
+    public void importConversations() throws IOException{
+        model.importConversations();
+    }
+    
+    public void exportConversations() throws IOException{
+        model.exportConversations();
+    }
+
+    public String getIEType() {
+        return model.getIEType();
+    }
     
 }
+    

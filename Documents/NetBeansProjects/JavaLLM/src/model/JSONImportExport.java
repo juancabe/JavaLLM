@@ -23,8 +23,12 @@ public class JSONImportExport implements IRepository{
     private String dirExport;
     private String dirImport;
     
+    public JSONImportExport(){
+        setFilesVariable();
+    }
+    
     @Override
-    public List<Conversation> importConversations() {
+    public List<Conversation> importConversations() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(dirImport))) {
             // Lee el contenido del archivo JSON
             StringBuilder jsonContent = new StringBuilder();
@@ -38,27 +42,31 @@ public class JSONImportExport implements IRepository{
             Type conversationListType = new TypeToken<List<Conversation>>(){}.getType();
             return gson.fromJson(jsonContent.toString(), conversationListType);
         } catch (Exception e) {
-            // Manejar la excepción de manera apropiada en tu aplicación
+            throw e;
         }
-        return null; // O manejar el retorno de manera adecuada si la lectura falla
     }
 
     @Override
-    public void exportConversation(List<Conversation> conversations) {
+    public void exportConversations(List<Conversation> conversations) throws IOException {
         // Implementación para exportar conversaciones a un archivo JSON en dirExport
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
         try (FileWriter writer = new FileWriter(dirExport)) {
             gson.toJson(conversations, writer);
         } catch (IOException e) {
-            // Manejar la excepción de manera apropiada en tu aplicación
+            throw e;
         }
     }
     
     @Override
-    public void setFilesVarible() {
-        dirExport = IRepository.exportPathNoExt + "xml";
-        dirImport = IRepository.importPathNoExt + "xml";
+    public void setFilesVariable() {
+        dirExport = IRepository.exportPathNoExt + "json";
+        dirImport = IRepository.importPathNoExt + "json";
+    }
+    
+    @Override
+    public String getIEType() {
+        return "json";
     }
     
     
