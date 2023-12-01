@@ -23,6 +23,7 @@ public class JavaLLM {
             controller = new ApplicationController(view, model);
             view = new SimpleConsoleView(controller);
             controller.setView(view);
+            System.out.println("ninguno");
         }
         else{
             
@@ -63,7 +64,7 @@ public class JavaLLM {
             controller = new ApplicationController(view, model);
 
             // Comprobar argumento vista
-            switch (args[0]) {
+            switch (args[2]) {
                 case "consola":
                     view = new SimpleConsoleView(controller);
                     break;

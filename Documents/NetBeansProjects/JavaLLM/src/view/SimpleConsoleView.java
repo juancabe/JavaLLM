@@ -68,6 +68,7 @@ public class SimpleConsoleView extends ApplicationView{
         String out;
         controller.newConversation();
         out = "\n\n---Nueva Conversacion---\n";
+        out += "Puede empezar a hablar ahora!\n";
         out(out);
         do{ 
             out = "";

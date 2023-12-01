@@ -38,26 +38,27 @@ public class FakeLLM implements ILLM, Serializable {
     private void generateInputOutput() {
         
         inputOutput.put("hola", "Buenas! ¿Qué tal el día?");
+        inputOutput.put("bien", "Me alegro!");
         inputOutput.put("buenos", "Buenas! ¿Qué tal el día?");
         inputOutput.put("llamas", "Me llamo FakeLLM! Encantado de conocerte!");
         inputOutput.put("chiste", "¿Cuál es el idioma de las tortugas? El tortugués.");
-        inputOutput.put("adiós", "Hasta luego. ¡Que tengas un buen día!");
+        inputOutput.put("adios", "Hasta luego. ¡Que tengas un buen día!");
         inputOutput.put("gracias", "De nada. Siempre estoy aquí para ayudar.");
         inputOutput.put("nombre", "Mi nombre es FakeLLM, ¿y el tuyo?");
         inputOutput.put("tiempo", "El tiempo está variable hoy, ¿no?");
-        inputOutput.put("programación", "¡Me encanta la programación! ¿En qué puedo ayudarte?");
+        inputOutput.put("programacion", "¡Me encanta la programación! ¿En qué puedo ayudarte?");
         inputOutput.put("noticias", "No tengo acceso a las noticias, pero puedo contarte un chiste si quieres.");
         inputOutput.put("edad", "No tengo edad, ¡soy una inteligencia artificial!");
-        inputOutput.put("música", "La música siempre alegra el día, ¿tienes algún género favorito?");
+        inputOutput.put("musica", "La música siempre alegra el día, ¿tienes algún género favorito?");
         inputOutput.put("triste", "Lo siento escuchar eso. ¿Puedo ayudarte de alguna manera?");
         inputOutput.put("feliz", "¡Me alegra escuchar que estás feliz! ¿Hay algo en particular que quieras compartir?");
         inputOutput.put("viaje", "Viajar es una experiencia maravillosa. ¿Tienes algún destino en mente?");
-        inputOutput.put("tecnología", "La tecnología avanza rápidamente. ¿Hay alguna novedad que te interese?");
+        inputOutput.put("tecnologia", "La tecnología avanza rápidamente. ¿Hay alguna novedad que te interese?");
         inputOutput.put("deporte", "El deporte es una excelente forma de mantenerse activo. ¿Tienes algún deporte favorito?");
-        inputOutput.put("café", "El café es mi combustible favorito. ¿Cómo prefieres tu café?");
+        inputOutput.put("cafe", "El café es mi combustible favorito. ¿Cómo prefieres tu café?");
         inputOutput.put("libro", "¿Has leído algún buen libro últimamente? ¡Me encantaría conocer tus recomendaciones!");
         inputOutput.put("sueño", "El sueño es importante para el bienestar. ¿Has tenido sueños interesantes recientemente?");
-        inputOutput.put("educación", "La educación es clave para el crecimiento personal. ¿Estás aprendiendo algo nuevo?");
+        inputOutput.put("educacion", "La educación es clave para el crecimiento personal. ¿Estás aprendiendo algo nuevo?");
         inputOutput.put("cine", "¿Te gusta el cine? ¿Tienes alguna película favorita?");
         inputOutput.put("salud", "La salud es lo más importante. ¿Cómo te encuentras hoy?");
         inputOutput.put("naturaleza", "La naturaleza tiene una belleza única. ¿Disfrutas pasar tiempo al aire libre?");
@@ -69,7 +70,7 @@ public class FakeLLM implements ILLM, Serializable {
         inputOutput.put("moda", "La moda es una expresión única. ¿Sigues alguna tendencia de moda?");
         inputOutput.put("aventura", "La vida es una gran aventura. ¿Has tenido alguna experiencia emocionante últimamente?");
         inputOutput.put("mascotas", "Las mascotas son maravillosas compañeras. ¿Tienes alguna?");
-        inputOutput.put("meditación", "La meditación puede ser beneficiosa. ¿Has probado alguna vez la meditación?");
+        inputOutput.put("meditacion", "La meditación puede ser beneficiosa. ¿Has probado alguna vez la meditación?");
 
     }
 
