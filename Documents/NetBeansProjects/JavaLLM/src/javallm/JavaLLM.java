@@ -7,7 +7,6 @@ import model.*;
 
 public class JavaLLM {
 
-    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
         ApplicationModel model;
         ApplicationController controller;
@@ -16,7 +15,7 @@ public class JavaLLM {
         
         if(args.length != 3){
             JSONImportExport repo = new JSONImportExport();
-            SmartILLM lanModel = new SmartILLM();
+            FakeLLM lanModel = new FakeLLM();
             
             model = new ApplicationModel(repo, lanModel);
             view = null;

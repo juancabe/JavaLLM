@@ -6,7 +6,7 @@ import java.io.IOException;
 public class SmartILLM implements ILLM {
 
     private final String indentifier;
-    private final String host = "https://1f25-34-125-208-176.ngrok.io/";
+    private final String host = "https://31e9-34-87-148-103.ngrok.io/";
     private OllamaAPI ollamaAPI;
 
     

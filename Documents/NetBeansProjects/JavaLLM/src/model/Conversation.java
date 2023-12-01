@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.time.Instant;
 import java.util.ArrayList;
