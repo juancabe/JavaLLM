@@ -37,8 +37,6 @@ public class FakeLLM implements ILLM, Serializable {
 
     private void generateInputOutput() {
         
-        inputOutput.put("hola", "Buenas! ¿Qué tal el día?");
-        inputOutput.put("bien", "Me alegro!");
         inputOutput.put("buenos", "Buenas! ¿Qué tal el día?");
         inputOutput.put("llamas", "Me llamo FakeLLM! Encantado de conocerte!");
         inputOutput.put("chiste", "¿Cuál es el idioma de las tortugas? El tortugués.");
@@ -53,7 +51,6 @@ public class FakeLLM implements ILLM, Serializable {
         inputOutput.put("triste", "Lo siento escuchar eso. ¿Puedo ayudarte de alguna manera?");
         inputOutput.put("feliz", "¡Me alegra escuchar que estás feliz! ¿Hay algo en particular que quieras compartir?");
         inputOutput.put("viaje", "Viajar es una experiencia maravillosa. ¿Tienes algún destino en mente?");
-        inputOutput.put("tecnologia", "La tecnología avanza rápidamente. ¿Hay alguna novedad que te interese?");
         inputOutput.put("deporte", "El deporte es una excelente forma de mantenerse activo. ¿Tienes algún deporte favorito?");
         inputOutput.put("cafe", "El café es mi combustible favorito. ¿Cómo prefieres tu café?");
         inputOutput.put("libro", "¿Has leído algún buen libro últimamente? ¡Me encantaría conocer tus recomendaciones!");
@@ -71,6 +68,37 @@ public class FakeLLM implements ILLM, Serializable {
         inputOutput.put("aventura", "La vida es una gran aventura. ¿Has tenido alguna experiencia emocionante últimamente?");
         inputOutput.put("mascotas", "Las mascotas son maravillosas compañeras. ¿Tienes alguna?");
         inputOutput.put("meditacion", "La meditación puede ser beneficiosa. ¿Has probado alguna vez la meditación?");
+        inputOutput.put("hobbies", "¿Tienes algún pasatiempo que disfrutes en tu tiempo libre?");
+        inputOutput.put("comida", "La comida siempre es un buen tema. ¿Cuál es tu platillo favorito?");
+        inputOutput.put("metas", "Hablando de metas, ¿hay algo que te propongas lograr a corto plazo?");
+        inputOutput.put("idiomas", "¿Hablas algún otro idioma además del español?");
+        inputOutput.put("tecnologia", "La tecnología avanza rápido. ¿Alguna vez has probado la realidad virtual?");
+        inputOutput.put("inspiracion", "La inspiración está en todas partes. ¿Hay algo que te inspire constantemente?");
+        inputOutput.put("series", "¿Sigues alguna serie de televisión? ¡Podríamos intercambiar recomendaciones!");
+        inputOutput.put("redes sociales", "Las redes sociales son una gran herramienta de conexión. ¿Cuál es tu plataforma favorita?");
+        inputOutput.put("robotica", "La robótica es un campo emocionante. ¿Te interesa la automatización?");
+        inputOutput.put("organizacion", "La organización es clave. ¿Tienes algún consejo para mantenerse organizado?");
+        inputOutput.put("viajar en el tiempo", "Viajar en el tiempo sería asombroso. ¿A qué época te gustaría ir?");
+        inputOutput.put("aprendizaje", "Aprender cosas nuevas es estimulante. ¿Qué tema te gustaría aprender más?");
+        inputOutput.put("humor", "La risa es buena para el alma. ¿Tienes algún comediante favorito?");
+        inputOutput.put("equipo", "¿Tienes algún equipo deportivo o artista favorito?");
+        inputOutput.put("novedades", "A veces es bueno probar cosas nuevas. ¿Has experimentado algo diferente recientemente?");
+        inputOutput.put("teatro", "El teatro es una forma única de arte. ¿Has asistido a alguna obra?");
+        inputOutput.put("tecnologia vestible", "Los dispositivos de tecnología vestible son interesantes. ¿Tienes alguno?");
+        inputOutput.put("ecologia", "Cuidar el medio ambiente es esencial. ¿Realizas alguna acción ecoamigable?");
+        inputOutput.put("sabias que", "¿Sabías que los pulpos tienen tres corazones?");
+        inputOutput.put("celebraciones", "Las celebraciones son momentos especiales. ¿Tienes alguna festividad que te guste especialmente?");
+        inputOutput.put("trabajo", "Hablemos de trabajo. ¿En qué sector te desempeñas?");
+        inputOutput.put("hola", "¡Hola! ¿Cómo estás?");
+        inputOutput.put("bueno", "¡Qué bueno! ¿Hay algo en particular que quieras compartir?");
+        inputOutput.put("ok", "¡De acuerdo! Si tienes alguna pregunta, no dudes en preguntar.");
+        inputOutput.put("de acuerdo", "Perfecto. ¿Hay algo más en lo que pueda ayudarte?");
+        inputOutput.put("genial", "¡Genial! Si hay algo que te interese hablar, estoy aquí para ti.");
+        inputOutput.put("entendido", "Entendido. ¿Hay alguna otra cosa de la que te gustaría hablar?");
+        inputOutput.put("vale", "Vale. Si necesitas información o ayuda, estoy aquí para proporcionarla.");
+        inputOutput.put("bien", "Me alegra escuchar que estás bien. ¿Hay algo que quieras comentar?");
+        inputOutput.put("excelente", "¡Excelente! ¿Hay algo emocionante que quieras compartir?");
+        inputOutput.put("gracias", "¡De nada! Siempre estoy aquí para ayudar. ¿Hay algo más en lo que pueda ser útil?");
 
     }
 
