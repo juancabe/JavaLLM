@@ -14,16 +14,22 @@ public class ApplicationController {
         this.model = model;
     }
     
-    public void appInit(){
-        view.showApplicationStart("Bienvenido!");
-    }
-    
     public void showMainMenu(){
         view.showMainMenu();
     }
     
     public void appEnd(){
-        view.showApplicationEnd("Adios!");
+        
+        try {
+            model.appEnd();
+            view.showApplicationEnd("Guardado correcto, adiós!\n");
+        } catch (IOException ex) {
+            view.showApplicationEnd("""
+                                    Error al guardar el estado de ejecuci\u00f3n.
+                                    La pr\u00f3xima vez que abra la aplicaci\u00f3n empezar\u00e1 de cero.
+                                    """);
+            System.err.println("Mensaje de error: " + ex.getMessage());
+        }
     }
     
     public void setView(ApplicationView view){

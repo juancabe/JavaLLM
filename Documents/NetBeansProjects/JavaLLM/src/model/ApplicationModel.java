@@ -1,21 +1,77 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationModel {
+public class ApplicationModel implements Serializable {
     
     private ILLM lanModel;
     private IRepository repo;
-    private Conversation conversation;
+    private transient Conversation conversation;
     private ArrayList<Conversation> conversations;
     
-    public ApplicationModel(IRepository repo, ILLM lanModel){
-        this.repo = repo;
+    /*
+    
+    Constructor que intenta deserializar archivo y puede lanzar excepcion
+    
+    */
+    private ApplicationModel(IRepository repo, ILLM lanModel) throws IOException, ClassNotFoundException, NoCoincidenceException{
+        
+        try {
+            ApplicationModel model = loadModelStatus();
+            if(!model.repo.getIEType().equals(repo.getIEType())){
+                throw new NoCoincidenceException("El repo no coincide");
+            }
+            else if(!model.lanModel.getIdentifier().equals(lanModel.getIdentifier())){
+                throw new NoCoincidenceException("El modelo de lenguaje no coincide");
+            } else {
+                this.repo = model.repo;
+                this.lanModel = model.lanModel;
+                this.conversations = model.conversations;
+            }
+            
+        } catch (IOException | ClassNotFoundException | NoCoincidenceException ex) {
+            throw ex;
+        }
+        
+    }
+    
+    /*
+    
+    Constructor que no intenta deserializar archivo, no lanza excepcion
+    
+    */
+    
+    public ApplicationModel(ILLM lanModel, IRepository repo){
         this.lanModel = lanModel;
+        this.repo = repo;
         this.conversations = new ArrayList<>();
     }
+    
+    /*
+    
+    Funcion para llamar a los constructores y devolver un model
+
+    */
+    
+    public static ModelCreation crearInstancia(IRepository repo, ILLM lanModel){
+        
+        try {
+            ApplicationModel model = new ApplicationModel(repo, lanModel);
+            return new ModelCreation(model, null);
+            
+        } catch (IOException | ClassNotFoundException | NoCoincidenceException ex) {
+            ApplicationModel model = new ApplicationModel(lanModel, repo);
+            return new ModelCreation(model, ex);
+        }
+    }
+    
 
     public boolean newConversation() {
         conversation = new Conversation(lanModel.getIdentifier());
@@ -76,4 +132,25 @@ public class ApplicationModel {
         return repo.getIEType();
     }
     
+    public void saveModelStatus() throws IOException{
+        try (FileOutputStream fileOutputStream = new FileOutputStream("model.bin");
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+            objectOutputStream.writeObject(this);
+        }
+    }
+    
+    public static ApplicationModel loadModelStatus() throws IOException, ClassNotFoundException{
+        try (FileInputStream fileInputStream = new FileInputStream("model.bin");
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
+            return (ApplicationModel) objectInputStream.readObject();
+        }
+    }
+
+    public void appEnd() throws IOException {
+        try {
+            saveModelStatus();
+        } catch (IOException ex) {
+            throw ex;
+        }
+    }
 }

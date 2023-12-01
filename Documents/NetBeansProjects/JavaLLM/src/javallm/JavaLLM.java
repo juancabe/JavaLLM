@@ -7,17 +7,18 @@ import model.*;
 
 public class JavaLLM {
 
+    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
         ApplicationModel model;
         ApplicationController controller;
         ApplicationView view = null;
-        
+        ModelCreation modelCreation;
         
         if(args.length != 3){
             JSONImportExport repo = new JSONImportExport();
-            FakeLLM lanModel = new FakeLLM();
-            
-            model = new ApplicationModel(repo, lanModel);
+            SmartILLM lanModel = new SmartILLM();
+            modelCreation = ApplicationModel.crearInstancia(repo, lanModel);
+            model = modelCreation.getModel();
             view = null;
             controller = new ApplicationController(view, model);
             view = new SimpleConsoleView(controller);
@@ -57,7 +58,8 @@ public class JavaLLM {
                     lanModel = new SmartILLM();
             }
 
-            model = new ApplicationModel(repo, lanModel);
+            modelCreation = ApplicationModel.crearInstancia(repo, lanModel);
+            model = modelCreation.getModel();
             controller = new ApplicationController(view, model);
 
             // Comprobar argumento vista
@@ -74,9 +76,19 @@ public class JavaLLM {
             controller.setView(view);
         }
         
-        view.showApplicationStart("Hola!!!");
+        String modelCreationMessage;
+
+        if(modelCreation.getEx() == null){
+            modelCreationMessage = "Estado anterior cargado con éxito.\n";
+            view.showApplicationStart("Bienvenido a su jLLM.\n" + modelCreationMessage, modelCreation.getEx());
+        }
+        else{
+            modelCreationMessage = "Ocurrió un error durante la carga del estado anterior, se creará uno nuevo.\n";
+            view.showApplicationStart("Bienvenido a su jLLM.\n" + modelCreationMessage, modelCreation.getEx());
+        }
+        
         while(view.showMainMenu());
-    
+        controller.appEnd();
     }
     
 }

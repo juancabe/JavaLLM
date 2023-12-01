@@ -1,11 +1,12 @@
 package model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Conversation {
+public class Conversation implements Serializable {
     
     private List<Message> messagesArray;
     private double initEpochSeconds;

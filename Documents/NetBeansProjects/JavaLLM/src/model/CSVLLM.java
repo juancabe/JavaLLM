@@ -3,11 +3,12 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CSVLLM implements ILLM {
+public class CSVLLM implements ILLM, Serializable {
 
     private final String indentifier;
 

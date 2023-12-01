@@ -3,8 +3,6 @@ package view;
 import static com.coti.tools.Esdia.*;
 import controller.ApplicationController;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SimpleConsoleView extends ApplicationView{
 
@@ -13,8 +11,11 @@ public class SimpleConsoleView extends ApplicationView{
     }
    
     @Override
-    public void showApplicationStart(String initInfo) {
+    public void showApplicationStart(String initInfo, Exception ex) {
         out(initInfo);
+        if(ex != null){
+            System.err.println("Error: " + ex.getMessage());
+        }
     }
 
     @Override

@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class Message {
+public class Message implements Serializable{
     
     private String sender;
     private long epochSeconds;

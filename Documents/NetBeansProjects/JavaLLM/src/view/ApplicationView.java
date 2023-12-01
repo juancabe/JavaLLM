@@ -10,7 +10,7 @@ public abstract class ApplicationView {
         this.controller = controller;
     }
     
-    public abstract void showApplicationStart(String initInfo);
+    public abstract void showApplicationStart(String initInfo, Exception ex);
     public abstract boolean showMainMenu();
     public abstract void showApplicationEnd(String endInfo);
 }
