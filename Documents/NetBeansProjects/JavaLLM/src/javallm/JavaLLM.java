@@ -7,7 +7,6 @@ import model.*;
 
 public class JavaLLM {
 
-    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
         ApplicationModel model;
         ApplicationController controller;
@@ -23,7 +22,6 @@ public class JavaLLM {
             controller = new ApplicationController(view, model);
             view = new SimpleConsoleView(controller);
             controller.setView(view);
-            System.out.println("ninguno");
         }
         else{
             

@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import static model.SHA1Calculator.calculateSHA1;
 
 public class CSVLLM implements ILLM, Serializable {
 
     private final String indentifier;
     private List<Phrase> phrases;
     private final String csvFilePath = "DataFiles/input.csv";
-    private String fileHash;
 
     public CSVLLM() {
         this.indentifier = "RandomCSVLLM";
@@ -25,7 +23,6 @@ public class CSVLLM implements ILLM, Serializable {
         } catch (IOException ex) {
             System.err.println("Error al leer el archivo CSV y guardar las frases");
         }
-        this.fileHash = getCSVFileSHA1(this.csvFilePath);
         
     }
     
@@ -58,7 +55,7 @@ public class CSVLLM implements ILLM, Serializable {
 
     @Override
     public String getIdentifier() {
-        return indentifier + ":" + fileHash;
+        return indentifier;
     }
     
     private void readCSV(String filePath) throws IOException {
@@ -133,21 +130,5 @@ public class CSVLLM implements ILLM, Serializable {
         int randomIndex = random.nextInt(filteredPhrases.size());
         return filteredPhrases.get(randomIndex);
     }
-
     
-    public static String getCSVFileSHA1(String csvFilePath){
-        try {
-            return calculateSHA1(csvFilePath);
-        } catch (Exception ex) {
-            System.err.println("Error al hashear el archivo CSV");
-            return null;
-        }
-    }
-
-    public String getFileHash() {
-        return fileHash;
-    }
-
-
-
 }

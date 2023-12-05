@@ -25,7 +25,7 @@ public class SimpleConsoleView extends ApplicationView{
             String out = "\n\n";
             out = out + "--- jLLM ---\n"
                     + "1) Nueva Conversación\n"
-                    + "2) Listar/Eliminar conversaciones\n"
+                    + "2) Eliminar/Listar/Continuar conversaciones\n"
                     + "3) Importar/Exportar conversaciones\n"
                     + "4) Salir\n"
                     + "Introduzca una opción: ";
@@ -41,7 +41,7 @@ public class SimpleConsoleView extends ApplicationView{
                 newConversation();
                 break;
             case 2:
-                listEliminateConversations();
+                listContinueEliminateConversations();
                 break;
             case 3:
                 importExportConversations();
@@ -91,28 +91,42 @@ public class SimpleConsoleView extends ApplicationView{
         
     }
 
-    private void listEliminateConversations() {
+    private void listContinueEliminateConversations() {
         
         int opcion;
         
         do{
         String out = """
+                     
+                     
                      ---Eliminar o listar Conversaciones---
                      1) Eliminar Conversaciones
                      2) Listar Conversaciones
+                     3) Continuar conversación
                      Introduzca una opción: 
                      """;
                     out(out);
                     opcion = readInt("");
-        }while(opcion<1 || opcion>2);
+        }while(opcion<1 || opcion>3);
         
-       if(opcion == 1){
-           eliminateConversation();
-       }
-       else if(opcion == 2){
-           String out = listConversations();
-           out(out);
-       }
+        switch (opcion) {
+            case 1:
+                eliminateConversation();
+                break;
+            case 2:
+                {
+                    String out = listConversations();
+                    out(out);
+                    break;
+                }
+            case 3:
+                {
+                    continueConversation();
+                    break;
+                }
+            default:
+                break;
+        }
         
     }
     
@@ -161,6 +175,88 @@ public class SimpleConsoleView extends ApplicationView{
         return out;
         
     }
+    
+    private void continueConversation(){
+        
+        int count = 0;
+        String out = "\n\n";
+        
+        if(controller.getNumOfConversations() == 0){
+            out("No hay conversaciones disponibles!");
+            return;
+        }
+        
+        out("Conversaciones disponibles: \n");
+        
+        for(int i = 0; i < controller.getNumOfConversations(); i++){
+            
+            if(controller.getConversationLLM(i).equals(controller.getActualConversationLLM())){
+                out += String.format("%2d) ", ++count);
+                out += controller.getConversationInitTime(i) + " | ";
+                out += controller.getConversationNumMessages(i) + " | ";
+                out += controller.getConversationFirst20Char(i) + "\n";
+            }
+            
+        }
+        out += "\n";
+        out(out);
+        
+        out = "Conversaciones disponibles para continuar: 1-" 
+                + Integer.toString(count)
+                + "\nIngrese la que quiere eliminar (0 para salir): ";
+        out(out);
+        int opcion;
+        do{
+            opcion = readInt("");
+        }while(opcion < 0 || opcion > count);
+        
+        if(opcion == 0){
+            out = "Saliendo...\n";
+            out(out);
+            return;
+        }
+        int conversation = -1;
+        for(int i = 0; i < controller.getNumOfConversations(); i++){
+            
+            if(controller.getConversationLLM(i).equals(controller.getActualConversationLLM())){
+                
+                if(--count == 0){
+                    conversation = i;
+                }
+                
+            }
+        }
+        
+        if(conversation == -1){
+            out("Error inesperado al continuar la conversación");
+            return;
+        } 
+        
+        controller.continueConversation(conversation);
+        out(controller.returnFullActualConversation());
+        String msg;
+        do{ 
+            out = "";
+            msg = readString("Usuario: ");
+            if(msg.toLowerCase().equals("/salir")){
+                continue;
+            }
+            out += controller.getLLMId().split(":")[0] + ": ";
+            try{
+                out += controller.getNewMensaje(msg) + "\n";
+            } catch (Exception e) {
+                out += "Lo siento, no sé qué decir. Ha fallado algo.";
+                System.err.println(e.getMessage());
+            }
+            out(out);
+            
+        }while(!msg.toLowerCase().equals("/salir"));
+        
+        controller.endConversation();        
+        
+    }
+    
+    
 
     private void importExportConversations() {
         
@@ -168,6 +264,8 @@ public class SimpleConsoleView extends ApplicationView{
         
         do{
         String out = """
+                     
+                     
                      ---Importar o exportar Conversaciones---
                      1) Importar Conversaciones
                      2) Exportar Conversaciones

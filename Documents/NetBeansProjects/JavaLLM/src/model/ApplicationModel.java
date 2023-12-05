@@ -146,4 +146,29 @@ public class ApplicationModel implements Serializable {
             throw ex;
         }
     }
+
+    public String getConversationLLM(int i) {
+        return conversations.get(i).getLLMIdentifier();
+    }
+
+    public String getActualConversationLLM() {
+        return lanModel.getIdentifier();
+    }
+
+    public void continueConversation(int conversation) {
+        this.conversation = conversations.get(conversation);
+        conversations.remove(conversation);
+    }
+
+    public String returnFullActualConversation() {
+        String out = "";
+        
+        List<Message> messages = conversation.getMessagesArray();
+
+        for(Message message: messages){
+            out += message.getSender() + ": " + message.getContent() + "\n";
+        }
+        
+        return out;
+    }
 }

@@ -83,6 +83,22 @@ public class ApplicationController {
     public String getIEType() {
         return model.getIEType();
     }
+
+    public String getConversationLLM(int i) {
+        return model.getConversationLLM(i);
+    }
+
+    public String getActualConversationLLM() {
+        return model.getActualConversationLLM();
+    }
+
+    public void continueConversation(int conversation) {
+        model.continueConversation(conversation);
+    }
+
+    public String returnFullActualConversation() {
+        return model.returnFullActualConversation();
+    }
     
 }
     
