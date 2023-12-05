@@ -60,7 +60,7 @@ public class ApplicationController {
         return model.getConversationInitTime(i);
     }
 
-    public String getConversationNumMessages(int i) {
+    public int getConversationNumMessages(int i) {
         return model.getConversationNumMessages(i);
     }
 

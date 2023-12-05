@@ -96,8 +96,8 @@ public class ApplicationModel implements Serializable {
         return Double.toString(conversations.get(i).getInitEpochSeconds());
     }
 
-    public String getConversationNumMessages(int i) {
-        return Integer.toString(conversations.get(i).getMessagesArray().size());
+    public int getConversationNumMessages(int i) {
+        return conversations.get(i).getMessagesArray().size();
     }
 
     public String getConversationFirst20Char(int i) {

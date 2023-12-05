@@ -168,7 +168,7 @@ public class SimpleConsoleView extends ApplicationView{
         
         for(int i = 0; i < controller.getNumOfConversations(); i++){
             out += controller.getConversationInitTime(i) + " | ";
-            out += controller.getConversationNumMessages(i) + " | ";
+            out += String.format("%2d", controller.getConversationNumMessages(i)) + " | ";
             out += controller.getConversationFirst20Char(i) + "\n";
         }
         out += "\n";
@@ -178,15 +178,24 @@ public class SimpleConsoleView extends ApplicationView{
     
     private void continueConversation(){
         
-        int count = 0;
+        int count = 0, conversations = 0;
         String out = "\n\n";
         
-        if(controller.getNumOfConversations() == 0){
+        for(int i = 0; i < controller.getNumOfConversations(); i++){
+            
+            if(controller.getConversationLLM(i).equals(controller.getActualConversationLLM())){
+                
+                conversations++;
+                
+                
+            }
+        }
+        if(conversations == 0){
             out("No hay conversaciones disponibles!");
             return;
         }
         
-        out("Conversaciones disponibles: \n");
+        out("\n\nConversaciones disponibles: \n");
         
         for(int i = 0; i < controller.getNumOfConversations(); i++){
             
@@ -269,6 +278,7 @@ public class SimpleConsoleView extends ApplicationView{
                      ---Importar o exportar Conversaciones---
                      1) Importar Conversaciones
                      2) Exportar Conversaciones
+                     Introduzca su opción: 
                      """;
                     out(out);
                     opcion = readInt("");
