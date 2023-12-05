@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ApplicationModel implements Serializable {
     
-    private ILLM lanModel;
-    private IRepository repo;
+    private transient ILLM lanModel;
+    private transient IRepository repo;
     private transient Conversation conversation;
     private ArrayList<Conversation> conversations;
     
@@ -25,18 +25,11 @@ public class ApplicationModel implements Serializable {
         
         try {
             ApplicationModel model = loadModelStatus();
-            if(!model.repo.getIEType().equals(repo.getIEType())){
-                throw new NoCoincidenceException("El repo no coincide");
-            }
-            else if(!model.lanModel.getIdentifier().equals(lanModel.getIdentifier())){
-                throw new NoCoincidenceException("El modelo de lenguaje no coincide");
-            } else {
-                this.repo = model.repo;
-                this.lanModel = model.lanModel;
-                this.conversations = model.conversations;
-            }
+            this.repo = repo;
+            this.lanModel = lanModel;
+            this.conversations = model.conversations;
             
-        } catch (IOException | ClassNotFoundException | NoCoincidenceException ex) {
+        } catch (IOException | ClassNotFoundException  ex) {
             throw ex;
         }
         

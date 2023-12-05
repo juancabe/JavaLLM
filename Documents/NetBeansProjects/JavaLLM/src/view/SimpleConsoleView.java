@@ -76,7 +76,7 @@ public class SimpleConsoleView extends ApplicationView{
             if(opcion.toLowerCase().equals("/salir")){
                 continue;
             }
-            out += controller.getLLMId() + ": ";
+            out += controller.getLLMId().split(":")[0] + ": ";
             try{
                 out += controller.getNewMensaje(opcion) + "\n";
             } catch (Exception e) {
@@ -100,6 +100,7 @@ public class SimpleConsoleView extends ApplicationView{
                      ---Eliminar o listar Conversaciones---
                      1) Eliminar Conversaciones
                      2) Listar Conversaciones
+                     Introduzca una opción: 
                      """;
                     out(out);
                     opcion = readInt("");
