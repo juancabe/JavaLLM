@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Conversation implements Serializable {
-    
+
     private List<Message> messagesArray;
     private double initEpochSeconds;
     private double endEpochSeconds;
@@ -17,8 +17,8 @@ public class Conversation implements Serializable {
     public Conversation() {
         // Constructor sin argumentos
     }
-    
-    public Conversation(String LLMIdentifier){
+
+    public Conversation(String LLMIdentifier) {
         this.LLMIdentifier = LLMIdentifier;
         this.messagesArray = new ArrayList<>();
         this.initEpochSeconds = Instant.now().getEpochSecond();
@@ -39,15 +39,15 @@ public class Conversation implements Serializable {
     public double getEndEpochSeconds() {
         return endEpochSeconds;
     }
-    
-    public void setEndEpoch(){
+
+    public void setEndEpoch() {
         this.endEpochSeconds = Instant.now().getEpochSecond();
     }
-    
-    public void addMessage(String sender, Instant instant, String string){
-        
+
+    public void addMessage(String sender, Instant instant, String string) {
+
         Message message = new Message(sender, string, instant);
         messagesArray.add(message);
     }
-    
+
 }

@@ -7,8 +7,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SimpleConsoleView extends ApplicationView {
 
@@ -151,13 +149,13 @@ public class SimpleConsoleView extends ApplicationView {
 
     private void eliminateConversation() {
         String out;
-        
+
         try {
             out(getListOfConversations());
         } catch (NoConversationException ex) {
             out("No hay conversaciones disponibles para eliminar.\nSaliendo...\n");
         }
-        
+
         out("\nIngrese la que quiere eliminar (0 para salir): ");
         int opcion;
         do {
@@ -172,13 +170,13 @@ public class SimpleConsoleView extends ApplicationView {
         controller.eliminateConversation(opcion);
         out = "Conversación eliminada con éxito!\n";
         out(out);
-        
+
     }
-    
-    private String getListOfConversations() throws NoConversationException{
-        
+
+    private String getListOfConversations() throws NoConversationException {
+
         String out = "";
-        
+
         if (controller.getNumOfConversations() == 0) {
             throw new NoConversationException("No hay conversaciones en función listConversationsAskForNumber");
         }
@@ -190,22 +188,22 @@ public class SimpleConsoleView extends ApplicationView {
             out += controller.getConversationNumMessages(i) + " | ";
             out += controller.getConversationFirst20Char(i) + "\n";
         }
-        
+
         return out;
-        
+
     }
 
     private int listConversationsAskForNumber(String askForNumber) throws NoConversationException {
 
         String out = "\n\n";
         out(out);
-        
-        out(getListOfConversations());        
+
+        out(getListOfConversations());
 
         out += "\n";
         out(out);
 
-        out = "Conversaciones disponibles:" +"1-"
+        out = "Conversaciones disponibles:" + "1-"
                 + controller.getNumOfConversations()
                 + "\n" + askForNumber;
         out(out);
@@ -227,13 +225,13 @@ public class SimpleConsoleView extends ApplicationView {
             out("No hay conversaciones disponibles!");
             return;
         }
-        
+
         if (option == 0) {
             out("Saliendo...\n");
             return;
         }
-        
-        controller.continueConversation(option-1);
+
+        controller.continueConversation(option - 1);
         // Pedir la conversación en forma de String
         out(controller.returnFullActualConversation());
 
@@ -256,7 +254,7 @@ public class SimpleConsoleView extends ApplicationView {
         }
 
         // Indicar que iniciamos una nueva conversación
-        controller.continueConversation(option-1);
+        controller.continueConversation(option - 1);
         // Pedir la conversación en forma de String
         out(controller.returnFullActualConversation());
 

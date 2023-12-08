@@ -10,22 +10,22 @@ import java.io.IOException;
 import java.util.List;
 
 public class VoiceConsoleView extends SimpleConsoleView {
-    
+
     private Voice voice;
     private SpeechEngine speechEngine;
 
     public VoiceConsoleView(ApplicationController controller) {
-        
+
         super(controller);
         this.voice = configureVoice();
-        if(this.voice != null){
+        if (this.voice != null) {
             this.speechEngine.setVoice(voice.getName());
         }
-        
+
     }
-    
-    private Voice configureVoice(){
-        try{
+
+    private Voice configureVoice() {
+        try {
             this.speechEngine = SpeechEngineNative.getInstance();
             List<Voice> voices = speechEngine.getAvailableVoices();
             VoicePreferences voicePreferences = new VoicePreferences();
@@ -37,21 +37,21 @@ public class VoiceConsoleView extends SimpleConsoleView {
                 voice = voices.get(0);
             }
             return voice;
-        }catch (SpeechEngineCreationException e) {
+        } catch (SpeechEngineCreationException e) {
             System.err.println(e.getMessage());
             out("No se pudo configurar la voz.");
         }
         out("No se pudo configurar la voz.");
         return null;
     }
-    
+
     @Override
-    protected void out(String out){
+    protected void out(String out) {
         System.out.print(out);
-        if(this.voice != null){
+        if (this.voice != null) {
             try {
                 speechEngine.say(out);
-                Thread.sleep(100*out.length());
+                Thread.sleep(100 * out.length());
             } catch (IOException ex) {
                 System.err.println("No pude hablar...");
             } catch (InterruptedException ex) {
@@ -59,5 +59,5 @@ public class VoiceConsoleView extends SimpleConsoleView {
             }
         }
     }
-    
+
 }

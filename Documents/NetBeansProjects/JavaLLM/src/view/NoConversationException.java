@@ -8,7 +8,7 @@ package view;
  *
  * @author Usuario
  */
-public class NoConversationException extends Exception{
+public class NoConversationException extends Exception {
 
     public NoConversationException() {
     }
@@ -28,7 +28,5 @@ public class NoConversationException extends Exception{
     public NoConversationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-    
-    
-    
+
 }

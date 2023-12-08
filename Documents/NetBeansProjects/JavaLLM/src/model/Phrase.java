@@ -2,8 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class Phrase implements Serializable{
-    
+public class Phrase implements Serializable {
+
     private String type;
     private int lenght;
     private String content;
@@ -31,5 +31,5 @@ public class Phrase implements Serializable{
     public String getContent() {
         return content;
     }
-    
+
 }

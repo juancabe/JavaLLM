@@ -6,21 +6,21 @@ import model.ApplicationModel;
 import view.ApplicationView;
 
 public class ApplicationController {
-    
+
     ApplicationView view;
     ApplicationModel model;
-    
-    public ApplicationController(ApplicationView view, ApplicationModel model){
+
+    public ApplicationController(ApplicationView view, ApplicationModel model) {
         this.view = view;
         this.model = model;
     }
-    
-    public void showMainMenu(){
+
+    public void showMainMenu() {
         view.showMainMenu();
     }
-    
-    public void appEnd(){
-        
+
+    public void appEnd() {
+
         try {
             model.appEnd();
             view.showApplicationEnd("Guardado correcto, adiós!\n");
@@ -32,8 +32,8 @@ public class ApplicationController {
             System.err.println("Mensaje de error: " + ex.getMessage());
         }
     }
-    
-    public void setView(ApplicationView view){
+
+    public void setView(ApplicationView view) {
         this.view = view;
     }
 
@@ -44,8 +44,8 @@ public class ApplicationController {
     public String getLLMId() {
         return model.getLLMId();
     }
-    
-    public String getNewMensaje(String opcion, Instant instant) throws Exception{
+
+    public String getNewMensaje(String opcion, Instant instant) throws Exception {
         return model.getNewMessage(opcion, instant);
     }
 
@@ -72,12 +72,12 @@ public class ApplicationController {
     public void eliminateConversation(int opcion) {
         model.eliminateConversation(opcion);
     }
-    
-    public void importConversations() throws IOException{
+
+    public void importConversations() throws IOException {
         model.importConversations();
     }
-    
-    public void exportConversations() throws IOException{
+
+    public void exportConversations() throws IOException {
         model.exportConversations();
     }
 
@@ -100,6 +100,5 @@ public class ApplicationController {
     public String returnFullActualConversation() {
         return model.returnFullActualConversation();
     }
-    
+
 }
-    

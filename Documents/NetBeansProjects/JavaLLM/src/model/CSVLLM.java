@@ -12,13 +12,13 @@ public class CSVLLM implements ILLM {
 
     private final String indentifier;
     private List<Phrase> phrases;
-    private final String csvFilePath = System.getProperty("user.home") +
-            System.getProperty("file.separator") +
-            "Desktop" +
-            System.getProperty("file.separator") +
-            "jLLM" +
-            System.getProperty("file.separator") +
-            "input.csv";
+    private final String csvFilePath = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + "Desktop"
+            + System.getProperty("file.separator")
+            + "jLLM"
+            + System.getProperty("file.separator")
+            + "input.csv";
 
     public CSVLLM() {
         this.indentifier = "RandomCSVLLM";
@@ -28,9 +28,9 @@ public class CSVLLM implements ILLM {
         } catch (IOException ex) {
             System.err.println("Error al leer el archivo CSV y guardar las frases");
         }
-        
+
     }
-    
+
     @Override
     public String speak(String string) throws Exception {
         if (string == null || string.isEmpty()) {
@@ -57,35 +57,34 @@ public class CSVLLM implements ILLM {
         }
     }
 
-
     @Override
     public String getIdentifier() {
         return indentifier;
     }
-    
+
     private void readCSV(String filePath) throws IOException {
-        
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> values = splitString(line, ',');
                 if (values.size() == 3) {
-                    try{
-                        if(values.get(2).length() != Integer.parseInt(values.get(1))){
+                    try {
+                        if (values.get(2).length() != Integer.parseInt(values.get(1))) {
                             throw new NoCoincidenceException("La longitud especificada no coincide con la longitud real.");
                         }
                         phrases.add(new Phrase(values.get(0), Integer.parseInt(values.get(1)), values.get(2)));
-                    } catch (NumberFormatException | NoCoincidenceException ex){
+                    } catch (NumberFormatException | NoCoincidenceException ex) {
                         System.err.println("Línea del CSV ignorada: " + ex.getMessage());
                     }
                 }
-                
+
             }
         } catch (IOException ex) {
             throw ex;
         }
     }
-    
+
     private static List<String> splitString(String input, char delimiter) {
         List<String> tokens = new ArrayList<>();
         boolean insideQuotes = false;
@@ -107,7 +106,7 @@ public class CSVLLM implements ILLM {
 
         return tokens;
     }
-    
+
     private Phrase getRandomPhrase() throws Exception {
         if (phrases.isEmpty()) {
             throw new Exception("No phrases read, line 64 model.CSVLLM");
@@ -117,7 +116,7 @@ public class CSVLLM implements ILLM {
         int randomIndex = random.nextInt(phrases.size());
         return phrases.get(randomIndex);
     }
-    
+
     private Phrase getRandomPhrase(String tipo) throws Exception {
         if (phrases.isEmpty()) {
             throw new Exception("No phrases read, line 64 model.CSVLLM");
@@ -135,5 +134,5 @@ public class CSVLLM implements ILLM {
         int randomIndex = random.nextInt(filteredPhrases.size());
         return filteredPhrases.get(randomIndex);
     }
-    
+
 }

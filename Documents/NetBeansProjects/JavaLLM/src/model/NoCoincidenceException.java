@@ -28,7 +28,5 @@ public class NoCoincidenceException extends Exception {
     public NoCoincidenceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-    
-    
-    
+
 }

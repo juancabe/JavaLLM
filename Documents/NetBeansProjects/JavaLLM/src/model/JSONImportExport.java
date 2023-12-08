@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.GsonBuilder;
@@ -22,11 +23,11 @@ public class JSONImportExport implements IRepository {
 
     private String dirExport;
     private String dirImport;
-    
-    public JSONImportExport(){
+
+    public JSONImportExport() {
         setFilesVariable();
     }
-    
+
     @Override
     public List<Conversation> importConversations() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(dirImport))) {
@@ -39,7 +40,8 @@ public class JSONImportExport implements IRepository {
 
             // Convierte el JSON a una lista de Conversations
             Gson gson = new Gson();
-            Type conversationListType = new TypeToken<List<Conversation>>(){}.getType();
+            Type conversationListType = new TypeToken<List<Conversation>>() {
+            }.getType();
             return gson.fromJson(jsonContent.toString(), conversationListType);
         } catch (Exception e) {
             throw e;
@@ -50,24 +52,23 @@ public class JSONImportExport implements IRepository {
     public void exportConversations(List<Conversation> conversations) throws IOException {
         // Implementación para exportar conversaciones a un archivo JSON en dirExport
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        
+
         try (FileWriter writer = new FileWriter(dirExport)) {
             gson.toJson(conversations, writer);
         } catch (IOException e) {
             throw e;
         }
     }
-    
+
     @Override
     public void setFilesVariable() {
         dirExport = IRepository.exportPathNoExt + "json";
         dirImport = IRepository.importPathNoExt + "json";
     }
-    
+
     @Override
     public String getIEType() {
         return "json";
     }
-    
-    
+
 }

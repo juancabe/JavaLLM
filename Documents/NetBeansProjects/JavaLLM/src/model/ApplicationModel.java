@@ -14,61 +14,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationModel implements Serializable {
-    
+
     private transient ILLM lanModel;
     private transient IRepository repo;
     private transient Conversation conversation;
     private ArrayList<Conversation> conversations;
-    
+
     /*
     
     Constructor que intenta deserializar archivo y puede lanzar excepcion
     
-    */
-    private ApplicationModel(IRepository repo, ILLM lanModel) throws IOException, ClassNotFoundException, NoCoincidenceException{
-        
+     */
+    private ApplicationModel(IRepository repo, ILLM lanModel) throws IOException, ClassNotFoundException, NoCoincidenceException {
+
         try {
             ApplicationModel model = loadModelStatus();
             this.repo = repo;
             this.lanModel = lanModel;
             this.conversations = model.conversations;
-            
-        } catch (IOException | ClassNotFoundException  ex) {
+
+        } catch (IOException | ClassNotFoundException ex) {
             throw ex;
         }
-        
+
     }
-    
+
     /*
     
     Constructor que no intenta deserializar archivo, no lanza excepcion
     
-    */
-    
-    public ApplicationModel(ILLM lanModel, IRepository repo){
+     */
+    public ApplicationModel(ILLM lanModel, IRepository repo) {
         this.lanModel = lanModel;
         this.repo = repo;
         this.conversations = new ArrayList<>();
     }
-    
+
     /*
     
     Funcion para llamar a los constructores y devolver un model
 
-    */
-    
-    public static ModelCreation crearInstancia(IRepository repo, ILLM lanModel){
-        
+     */
+    public static ModelCreation crearInstancia(IRepository repo, ILLM lanModel) {
+
         try {
             ApplicationModel model = new ApplicationModel(repo, lanModel);
             return new ModelCreation(model, null);
-            
+
         } catch (IOException | ClassNotFoundException | NoCoincidenceException ex) {
             ApplicationModel model = new ApplicationModel(lanModel, repo);
             return new ModelCreation(model, ex);
         }
     }
-    
 
     public boolean newConversation() {
         conversation = new Conversation(lanModel.getIdentifier());
@@ -76,18 +73,18 @@ public class ApplicationModel implements Serializable {
     }
 
     public String getNewMessage(String opcion, Instant instant) throws Exception {
-        
+
         String modelMessage = lanModel.speak(opcion);
         String toPrint;
         Instant modelInstant = Instant.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[dd/MM/yy: HH:mm:ss]");
-        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(modelInstant, ZoneId.systemDefault());        
-        
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(modelInstant, ZoneId.systemDefault());
+
         conversation.addMessage("Usuario", instant, opcion);
         conversation.addMessage(lanModel.getIdentifier(), modelInstant, modelMessage);
-        
+
         toPrint = "[" + zonedDateTime.format(formatter) + "]: " + modelMessage;
-        
+
         return toPrint;
     }
 
@@ -119,17 +116,17 @@ public class ApplicationModel implements Serializable {
     }
 
     public void eliminateConversation(int opcion) {
-        conversations.remove(opcion-1);
+        conversations.remove(opcion - 1);
     }
-    
+
     public void importConversations() throws IOException {
         List<Conversation> importedConversations = repo.importConversations();
-        for(Conversation importingConversation : importedConversations){
+        for (Conversation importingConversation : importedConversations) {
             conversations.add(importingConversation);
             System.out.println(importingConversation.getInitEpochSeconds());
         }
     }
-    
+
     public void exportConversations() throws IOException {
         repo.exportConversations(conversations);
     }
@@ -137,17 +134,15 @@ public class ApplicationModel implements Serializable {
     public String getIEType() {
         return repo.getIEType();
     }
-    
-    public void saveModelStatus() throws IOException{
-        try (FileOutputStream fileOutputStream = new FileOutputStream("model.bin");
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+
+    public void saveModelStatus() throws IOException {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("model.bin"); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(this);
         }
     }
-    
-    public static ApplicationModel loadModelStatus() throws IOException, ClassNotFoundException{
-        try (FileInputStream fileInputStream = new FileInputStream("model.bin");
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
+
+    public static ApplicationModel loadModelStatus() throws IOException, ClassNotFoundException {
+        try (FileInputStream fileInputStream = new FileInputStream("model.bin"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             return (ApplicationModel) objectInputStream.readObject();
         }
     }
@@ -175,13 +170,13 @@ public class ApplicationModel implements Serializable {
 
     public String returnFullActualConversation() {
         String out = "";
-        
+
         List<Message> messages = conversation.getMessagesArray();
 
-        for(Message message: messages){
+        for (Message message : messages) {
             out += message.getSender() + " [" + message.getEpochAsDate() + "]: " + message.getContent() + "\n";
         }
-        
+
         return out;
     }
 }

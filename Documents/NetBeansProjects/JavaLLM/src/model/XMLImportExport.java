@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.util.List;
 
 public class XMLImportExport implements IRepository {
-    
+
     private String dirExport;
     private String dirImport;
-    
-    public XMLImportExport(){
+
+    public XMLImportExport() {
         setFilesVariable();
     }
-    
+
     @Override
     public List<Conversation> importConversations() throws IOException {
         ObjectMapper mapper = new XmlMapper();
@@ -47,10 +47,10 @@ public class XMLImportExport implements IRepository {
         dirExport = IRepository.exportPathNoExt + "xml";
         dirImport = IRepository.importPathNoExt + "xml";
     }
-    
+
     @Override
     public String getIEType() {
         return "xml";
     }
-    
+
 }

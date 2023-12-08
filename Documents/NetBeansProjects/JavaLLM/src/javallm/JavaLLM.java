@@ -3,7 +3,6 @@ package javallm;
 import view.*;
 import controller.*;
 import model.*;
-   
 
 public class JavaLLM {
 
@@ -12,8 +11,8 @@ public class JavaLLM {
         ApplicationController controller;
         ApplicationView view = null;
         ModelCreation modelCreation;
-        
-        if(args.length != 3){
+
+        if (args.length != 3) {
             JSONImportExport repo = new JSONImportExport();
             SmartILLM lanModel = new SmartILLM();
             modelCreation = ApplicationModel.crearInstancia(repo, lanModel);
@@ -22,13 +21,10 @@ public class JavaLLM {
             controller = new ApplicationController(view, model);
             view = new SimpleConsoleView(controller);
             controller.setView(view);
-        }
-        else{
-            
+        } else {
 
             ILLM lanModel;
             IRepository repo;
-
 
             // Comprobar argumento repository
             switch (args[0]) {
@@ -74,20 +70,19 @@ public class JavaLLM {
             }
             controller.setView(view);
         }
-        
+
         String modelCreationMessage;
 
-        if(modelCreation.getEx() == null){
+        if (modelCreation.getEx() == null) {
             modelCreationMessage = "Estado anterior cargado con éxito.\n";
             view.showApplicationStart("Bienvenido a su jLLM.\n" + modelCreationMessage, modelCreation.getEx());
-        }
-        else{
+        } else {
             modelCreationMessage = "Ocurrió un error durante la carga del estado anterior, se creará uno nuevo.\n";
             view.showApplicationStart("Bienvenido a su jLLM.\n" + modelCreationMessage, modelCreation.getEx());
         }
-        
-        while(view.showMainMenu());
+
+        while (view.showMainMenu());
         controller.appEnd();
     }
-    
+
 }

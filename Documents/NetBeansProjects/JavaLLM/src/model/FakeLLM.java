@@ -17,7 +17,7 @@ public class FakeLLM implements ILLM {
         generateInputOutput();
         generateDefaultOutput();
     }
-    
+
     @Override
     public String speak(String string) {
         for (String key : inputOutput.keySet()) {
@@ -35,7 +35,7 @@ public class FakeLLM implements ILLM {
     }
 
     private void generateInputOutput() {
-        
+
         inputOutput.put("buenos", "Buenas! ¿Qué tal el día?");
         inputOutput.put("llamas", "Me llamo FakeLLM! Encantado de conocerte!");
         inputOutput.put("chiste", "¿Cuál es el idioma de las tortugas? El tortugués.");
