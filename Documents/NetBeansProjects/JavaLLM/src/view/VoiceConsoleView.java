@@ -8,8 +8,6 @@ import io.github.jonelo.jAdapterForNativeTTS.engines.VoicePreferences;
 import io.github.jonelo.jAdapterForNativeTTS.engines.exceptions.SpeechEngineCreationException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class VoiceConsoleView extends SimpleConsoleView {
     

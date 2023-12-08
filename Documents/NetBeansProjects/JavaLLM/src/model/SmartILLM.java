@@ -3,8 +3,7 @@ package model;
 import io.github.amithkoujalgi.ollama4j.core.OllamaAPI;
 import io.github.amithkoujalgi.ollama4j.core.exceptions.OllamaBaseException;
 import java.io.IOException;
-import java.io.Serializable;
-public class SmartILLM implements ILLM, Serializable{
+public class SmartILLM implements ILLM {
 
     private final String indentifier;
     private final String host = "https://31e9-34-87-148-103.ngrok.io/";

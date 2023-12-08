@@ -6,10 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
-public class XMLImportExport implements IRepository, Serializable {
+public class XMLImportExport implements IRepository {
     
     private String dirExport;
     private String dirImport;

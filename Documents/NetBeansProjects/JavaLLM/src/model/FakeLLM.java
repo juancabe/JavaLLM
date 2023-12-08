@@ -1,11 +1,10 @@
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class FakeLLM implements ILLM, Serializable {
+public class FakeLLM implements ILLM {
 
     private final String indentifier;
     private HashMap<String, String> inputOutput;

@@ -44,9 +44,9 @@ public class Conversation implements Serializable {
         this.endEpochSeconds = Instant.now().getEpochSecond();
     }
     
-    public void addMessage(String sender, String string){
+    public void addMessage(String sender, Instant instant, String string){
         
-        Message message = new Message(sender, string);
+        Message message = new Message(sender, string, instant);
         messagesArray.add(message);
     }
     

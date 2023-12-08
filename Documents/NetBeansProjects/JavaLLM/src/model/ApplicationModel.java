@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,11 +75,20 @@ public class ApplicationModel implements Serializable {
         return true;
     }
 
-    public String getNewMessage(String opcion) throws Exception {
+    public String getNewMessage(String opcion, Instant instant) throws Exception {
+        
         String modelMessage = lanModel.speak(opcion);
-        conversation.addMessage("Usuario", opcion);
-        conversation.addMessage(lanModel.getIdentifier(), modelMessage);
-        return modelMessage;
+        String toPrint;
+        Instant modelInstant = Instant.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[dd/MM/yy: HH:mm:ss]");
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(modelInstant, ZoneId.systemDefault());        
+        
+        conversation.addMessage("Usuario", instant, opcion);
+        conversation.addMessage(lanModel.getIdentifier(), modelInstant, modelMessage);
+        
+        toPrint = "[" + zonedDateTime.format(formatter) + "]: " + modelMessage;
+        
+        return toPrint;
     }
 
     public String getLLMId() {
@@ -166,7 +179,7 @@ public class ApplicationModel implements Serializable {
         List<Message> messages = conversation.getMessagesArray();
 
         for(Message message: messages){
-            out += message.getSender() + ": " + message.getContent() + "\n";
+            out += message.getSender() + " [" + message.getEpochAsDate() + "]: " + message.getContent() + "\n";
         }
         
         return out;

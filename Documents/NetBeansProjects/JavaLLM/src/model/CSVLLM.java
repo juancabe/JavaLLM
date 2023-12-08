@@ -3,17 +3,22 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class CSVLLM implements ILLM, Serializable {
+public class CSVLLM implements ILLM {
 
     private final String indentifier;
     private List<Phrase> phrases;
-    private final String csvFilePath = "DataFiles/input.csv";
+    private final String csvFilePath = System.getProperty("user.home") +
+            System.getProperty("file.separator") +
+            "Desktop" +
+            System.getProperty("file.separator") +
+            "jLLM" +
+            System.getProperty("file.separator") +
+            "input.csv";
 
     public CSVLLM() {
         this.indentifier = "RandomCSVLLM";

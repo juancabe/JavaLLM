@@ -3,17 +3,23 @@ package view;
 import static com.coti.tools.Esdia.*;
 import controller.ApplicationController;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class SimpleConsoleView extends ApplicationView{
+public class SimpleConsoleView extends ApplicationView {
 
     public SimpleConsoleView(ApplicationController controller) {
         super(controller);
     }
-   
+
     @Override
     public void showApplicationStart(String initInfo, Exception ex) {
         out(initInfo);
-        if(ex != null){
+        if (ex != null) {
             System.err.println("Error: " + ex.getMessage());
         }
     }
@@ -21,7 +27,7 @@ public class SimpleConsoleView extends ApplicationView{
     @Override
     public boolean showMainMenu() {
         int opcion;
-        do{
+        do {
             String out = "\n\n";
             out = out + "--- jLLM ---\n"
                     + "1) Nueva Conversación\n"
@@ -31,12 +37,12 @@ public class SimpleConsoleView extends ApplicationView{
                     + "Introduzca una opción: ";
             out(out);
             opcion = readInt("");
-            if(opcion == 4){
+            if (opcion == 4) {
                 return false;
             }
-        }while(opcion<1 || opcion>4);
-        
-        switch(opcion){
+        } while (opcion < 1 || opcion > 4);
+
+        switch (opcion) {
             case 1:
                 newConversation();
                 break;
@@ -58,45 +64,61 @@ public class SimpleConsoleView extends ApplicationView{
     public void showApplicationEnd(String endInfo) {
         out(endInfo);
     }
-    
-    protected void out(String out){
+
+    protected void out(String out) {
         System.out.print(out);
     }
 
+    private void conversate() {
+
+        String opcion;
+        String out;
+
+        do {
+            out = "";
+            Instant instant = Instant.now();
+            ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[dd/MM/yy: HH:mm:ss]");
+
+            out("Usuario [" + zonedDateTime.format(formatter) + "]: ");
+            opcion = readString("");
+
+            if (!opcion.toLowerCase().equals("/salir")) {
+
+                out += controller.getLLMId().split(":")[0];
+                try {
+                    out += " " + controller.getNewMensaje(opcion, instant) + "\n";
+                } catch (Exception e) {
+                    out += "Lo siento, no se que decir. Ha fallado algo.";
+                    System.err.println(e.getMessage());
+                }
+                out(out);
+            }
+
+        } while (!opcion.toLowerCase().equals("/salir"));
+
+    }
+
     private void newConversation() {
-        String opcion ;
         String out;
         controller.newConversation();
+
         out = "\n\n---Nueva Conversacion---\n";
         out += "Puede empezar a hablar ahora!\n";
         out(out);
-        do{ 
-            out = "";
-            opcion = readString("Usuario: ");
-            if(opcion.toLowerCase().equals("/salir")){
-                continue;
-            }
-            out += controller.getLLMId().split(":")[0] + ": ";
-            try{
-                out += controller.getNewMensaje(opcion) + "\n";
-            } catch (Exception e) {
-                out += "Lo siento, no se que decir. Ha fallado algo.";
-                System.err.println(e.getMessage());
-            }
-            out(out);
-            
-        }while(!opcion.toLowerCase().equals("/salir"));
-        
+
+        conversate();
+
         controller.endConversation();
-        
+
     }
 
     private void listContinueEliminateConversations() {
-        
+
         int opcion;
-        
-        do{
-        String out = """
+
+        do {
+            String out = """
                      
                      
                      ---Eliminar o listar Conversaciones---
@@ -105,174 +127,151 @@ public class SimpleConsoleView extends ApplicationView{
                      3) Continuar conversación
                      Introduzca una opción: 
                      """;
-                    out(out);
-                    opcion = readInt("");
-        }while(opcion<1 || opcion>3);
-        
+            out(out);
+            opcion = readInt("");
+        } while (opcion < 1 || opcion > 3);
+
         switch (opcion) {
             case 1:
                 eliminateConversation();
                 break;
-            case 2:
-                {
-                    String out = listConversations();
-                    out(out);
-                    break;
-                }
-            case 3:
-                {
-                    continueConversation();
-                    break;
-                }
+            case 2: {
+                listConversations();
+                break;
+            }
+            case 3: {
+                continueConversation();
+                break;
+            }
             default:
                 break;
         }
-        
+
     }
-    
-    private void eliminateConversation(){
+
+    private void eliminateConversation() {
         String out;
-        if(controller.getNumOfConversations() < 1){
-            out = "No hay conversaciones disponibles";
-            out(out);
-        } else{
-            out = "Conversaciones disponibles para eliminar: 1-" 
-                + Integer.toString(controller.getNumOfConversations())
-                + "\nIngrese la que quiere eliminar (0 para salir): ";
-            out(out);
-            int opcion;
-            do{
-                opcion = readInt("");
-            }while(opcion < 0 || opcion > controller.getNumOfConversations());
-            
-            if(opcion == 0){
-                out = "Saliendo...\n";
-                out(out);
-                return;
-            }
-            controller.eliminateConversation(opcion);
-            out = "Conversación eliminada con éxito!\n";
-            out(out);
-        }
-    }
-    
-    private String listConversations(){
         
-        String out = "\n\n";
-        
-        if(controller.getNumOfConversations() == 0){
-            out = "No hay conversaciones disponibles!";
-            return out;
-            
+        try {
+            out(getListOfConversations());
+        } catch (NoConversationException ex) {
+            out("No hay conversaciones disponibles para eliminar.\nSaliendo...\n");
         }
         
-        for(int i = 0; i < controller.getNumOfConversations(); i++){
-            out += controller.getConversationInitTime(i) + " | ";
-            out += String.format("%2d", controller.getConversationNumMessages(i)) + " | ";
-            out += controller.getConversationFirst20Char(i) + "\n";
-        }
-        out += "\n";
-        return out;
-        
-    }
-    
-    private void continueConversation(){
-        
-        int count = 0, conversations = 0;
-        String out = "\n\n";
-        
-        for(int i = 0; i < controller.getNumOfConversations(); i++){
-            
-            if(controller.getConversationLLM(i).equals(controller.getActualConversationLLM())){
-                
-                conversations++;
-                
-                
-            }
-        }
-        if(conversations == 0){
-            out("No hay conversaciones disponibles!");
-            return;
-        }
-        
-        out("\n\nConversaciones disponibles: \n");
-        
-        for(int i = 0; i < controller.getNumOfConversations(); i++){
-            
-            if(controller.getConversationLLM(i).equals(controller.getActualConversationLLM())){
-                out += String.format("%2d) ", ++count);
-                out += controller.getConversationInitTime(i) + " | ";
-                out += controller.getConversationNumMessages(i) + " | ";
-                out += controller.getConversationFirst20Char(i) + "\n";
-            }
-            
-        }
-        out += "\n";
-        out(out);
-        
-        out = "Conversaciones disponibles para continuar: 1-" 
-                + Integer.toString(count)
-                + "\nIngrese la que quiere eliminar (0 para salir): ";
-        out(out);
+        out("\nIngrese la que quiere eliminar (0 para salir): ");
         int opcion;
-        do{
+        do {
             opcion = readInt("");
-        }while(opcion < 0 || opcion > count);
-        
-        if(opcion == 0){
+        } while (opcion < 0 || opcion > controller.getNumOfConversations());
+
+        if (opcion == 0) {
             out = "Saliendo...\n";
             out(out);
             return;
         }
-        int conversation = -1;
-        for(int i = 0; i < controller.getNumOfConversations(); i++){
-            
-            if(controller.getConversationLLM(i).equals(controller.getActualConversationLLM())){
-                
-                if(--count == 0){
-                    conversation = i;
-                }
-                
-            }
-        }
-        
-        if(conversation == -1){
-            out("Error inesperado al continuar la conversación");
-            return;
-        } 
-        
-        controller.continueConversation(conversation);
-        out(controller.returnFullActualConversation());
-        String msg;
-        do{ 
-            out = "";
-            msg = readString("Usuario: ");
-            if(msg.toLowerCase().equals("/salir")){
-                continue;
-            }
-            out += controller.getLLMId().split(":")[0] + ": ";
-            try{
-                out += controller.getNewMensaje(msg) + "\n";
-            } catch (Exception e) {
-                out += "Lo siento, no sé qué decir. Ha fallado algo.";
-                System.err.println(e.getMessage());
-            }
-            out(out);
-            
-        }while(!msg.toLowerCase().equals("/salir"));
-        
-        controller.endConversation();        
+        controller.eliminateConversation(opcion);
+        out = "Conversación eliminada con éxito!\n";
+        out(out);
         
     }
     
-    
+    private String getListOfConversations() throws NoConversationException{
+        
+        String out = "";
+        
+        if (controller.getNumOfConversations() == 0) {
+            throw new NoConversationException("No hay conversaciones en función listConversationsAskForNumber");
+        }
+
+        for (int i = 0; i < controller.getNumOfConversations(); i++) {
+
+            out += String.format("%2d) ", i + 1);
+            out += controller.getConversationInitTime(i) + " | ";
+            out += controller.getConversationNumMessages(i) + " | ";
+            out += controller.getConversationFirst20Char(i) + "\n";
+        }
+        
+        return out;
+        
+    }
+
+    private int listConversationsAskForNumber(String askForNumber) throws NoConversationException {
+
+        String out = "\n\n";
+        out(out);
+        
+        out(getListOfConversations());        
+
+        out += "\n";
+        out(out);
+
+        out = "Conversaciones disponibles:" +"1-"
+                + controller.getNumOfConversations()
+                + "\n" + askForNumber;
+        out(out);
+        int option;
+        do {
+            option = readInt("");
+        } while (option < 0 || option > controller.getNumOfConversations());
+
+        return option;
+
+    }
+
+    private void listConversations() {
+
+        int option;
+        try {
+            option = listConversationsAskForNumber("Ingrese la que quiere mostrar en detalle (0 para salir): ");
+        } catch (NoConversationException e) {
+            out("No hay conversaciones disponibles!");
+            return;
+        }
+        
+        if (option == 0) {
+            out("Saliendo...\n");
+            return;
+        }
+        
+        controller.continueConversation(option-1);
+        // Pedir la conversación en forma de String
+        out(controller.returnFullActualConversation());
+
+        controller.endConversation();
+
+    }
+
+    private void continueConversation() {
+        int option;
+        try {
+            option = listConversationsAskForNumber("Ingrese la que quiere continuar en detalle (0 para salir): ");
+        } catch (NoConversationException e) {
+            out("No hay conversaciones disponibles!");
+            return;
+        }
+
+        if (option == 0) {
+            out("Saliendo...\n");
+            return;
+        }
+
+        // Indicar que iniciamos una nueva conversación
+        controller.continueConversation(option-1);
+        // Pedir la conversación en forma de String
+        out(controller.returnFullActualConversation());
+
+        conversate();
+
+        controller.endConversation();
+
+    }
 
     private void importExportConversations() {
-        
+
         int opcion;
-        
-        do{
-        String out = """
+
+        do {
+            String out = """
                      
                      
                      ---Importar o exportar Conversaciones---
@@ -280,18 +279,16 @@ public class SimpleConsoleView extends ApplicationView{
                      2) Exportar Conversaciones
                      Introduzca su opción: 
                      """;
-                    out(out);
-                    opcion = readInt("");
-        }while(opcion<1 || opcion>2);
-        
-        if(opcion == 1){
+            out(out);
+            opcion = readInt("");
+        } while (opcion < 1 || opcion > 2);
+
+        if (opcion == 1) {
             importConversations();
-        }
-        else{
+        } else {
             exportConversations();
         }
-        
-        
+
     }
 
     private void importConversations() {
@@ -323,5 +320,5 @@ public class SimpleConsoleView extends ApplicationView{
             System.err.println("Mensaje de error: " + ex.getMessage());
         }
     }
-    
+
 }

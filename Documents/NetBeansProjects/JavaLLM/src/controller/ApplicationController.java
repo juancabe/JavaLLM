@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.time.Instant;
 import model.ApplicationModel;
 import view.ApplicationView;
 
@@ -44,8 +45,8 @@ public class ApplicationController {
         return model.getLLMId();
     }
     
-    public String getNewMensaje(String opcion) throws Exception{
-        return model.getNewMessage(opcion);
+    public String getNewMensaje(String opcion, Instant instant) throws Exception{
+        return model.getNewMessage(opcion, instant);
     }
 
     public void endConversation() {

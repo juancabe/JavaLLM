@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  *
  * @author Usuario
  */
-public class JSONImportExport implements IRepository, Serializable{
+public class JSONImportExport implements IRepository {
 
     private String dirExport;
     private String dirImport;
