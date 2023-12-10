@@ -16,7 +16,7 @@ public class VoiceConsoleView extends SimpleConsoleView {
 
     public VoiceConsoleView(ApplicationController controller) {
 
-        super(controller, false);
+        super(controller, true);
         this.voice = configureVoice();
         if (this.voice != null) {
             this.speechEngine.setVoice(voice.getName());
@@ -30,10 +30,9 @@ public class VoiceConsoleView extends SimpleConsoleView {
             List<Voice> voices = speechEngine.getAvailableVoices();
             VoicePreferences voicePreferences = new VoicePreferences();
             voicePreferences.setLanguage("es"); //  ISO-639-1
-            voicePreferences.setCountry("SP"); // ISO 3166-1 Alpha-2 code
             voice = speechEngine.findVoiceByPreferences(voicePreferences);
             if (voice == null) {
-                System.out.println("Aviso: La voz no se ha podido configurar segun las preferencias");
+                System.out.println("Aviso: La voz no se ha podido configurar segun las preferencias (en español)");
                 voice = voices.get(0);
             }
             return voice;
