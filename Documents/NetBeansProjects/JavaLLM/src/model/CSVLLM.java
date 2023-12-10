@@ -38,23 +38,54 @@ public class CSVLLM implements ILLM {
             return getRandomPhrase().getContent();
         }
 
-        // Filtros para determinar el tipo de respuesta
-        if (string.contains("?")) {
-            // Pregunta
+        if (string.contains("?") ||
+            string.contains("cómo") ||
+            string.contains("qué") ||
+            string.contains("cuándo") ||
+            string.contains("dónde") ||
+            string.contains("por qué") ||
+            string.contains("quién") ||
+            string.contains("cuál") ||
+            string.contains("cuánto") ||
+            string.contains("cuáles")) {
+            
             return getRandomPhrase("pregunta").getContent();
-        } else if (string.endsWith("!")) {
-            // Sorpresa
+            
+        } else if (string.endsWith("!") ||
+            string.contains("increíble") ||
+            string.contains("sorprendente") ||
+            string.contains("asombroso") ||
+            string.contains("wow") ||
+            string.contains("impresionante")) {
+            
             return getRandomPhrase("sorpresa").getContent();
-        } else if (string.equalsIgnoreCase("adios") || string.equalsIgnoreCase("chao")) {
-            // Despedida
+            
+        } else if (string.equalsIgnoreCase("adios") ||
+            string.equalsIgnoreCase("chao") ||
+            string.equalsIgnoreCase("hasta luego") ||
+            string.equalsIgnoreCase("hasta pronto") ||
+            string.equalsIgnoreCase("nos vemos") ||
+            string.equalsIgnoreCase("hasta la vista") ||
+            string.equalsIgnoreCase("bye") ||
+            string.equalsIgnoreCase("hasta luego")) {
+            
             return getRandomPhrase("despedida").getContent();
-        } else if (string.equalsIgnoreCase("hola") || string.equalsIgnoreCase("saludo")) {
-            // Saludo
+            
+        } else if (string.equalsIgnoreCase("hola") ||
+            string.equalsIgnoreCase("saludo") ||
+            string.equalsIgnoreCase("buenos dias") ||
+            string.equalsIgnoreCase("buenas tardes") ||
+            string.equalsIgnoreCase("buenas noches") ||
+            string.equalsIgnoreCase("hi") ||
+            string.equalsIgnoreCase("hello") ||
+            string.equalsIgnoreCase("greetings")) {
+            
             return getRandomPhrase("saludo").getContent();
+            
         } else {
-            // Respuesta por defecto para otros casos
             return getRandomPhrase().getContent();
         }
+
     }
 
     @Override
