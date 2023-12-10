@@ -49,7 +49,7 @@ public class CSVLLM implements ILLM {
             string.contains("cuánto") ||
             string.contains("cuáles")) {
             
-            return getRandomPhrase("pregunta").getContent();
+            return getRandomPhrase("respuesta").getContent();
             
         } else if (string.endsWith("!") ||
             string.contains("increíble") ||
@@ -82,7 +82,12 @@ public class CSVLLM implements ILLM {
             
             return getRandomPhrase("saludo").getContent();
             
-        } else {
+        } else if(string.contains("refran")){
+            
+            return getRandomPhrase("refran").getContent();
+            
+        }
+        else {
             return getRandomPhrase().getContent();
         }
 
@@ -97,6 +102,7 @@ public class CSVLLM implements ILLM {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            reader.readLine(); // Saltamos la primera linea del archivo
             while ((line = reader.readLine()) != null) {
                 List<String> values = splitString(line, ',');
                 if (values.size() == 3) {
