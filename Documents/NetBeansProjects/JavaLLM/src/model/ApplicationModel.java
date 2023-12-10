@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationModel implements Serializable {
-
+    
+    static final transient String binLocation = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + "Desktop"
+            + System.getProperty("file.separator")
+            + "jLLM"
+            + System.getProperty("file.separator")
+            + "jLLM.bin";;
     private transient ILLM lanModel;
     private transient IRepository repo;
     private transient Conversation conversation;
@@ -137,13 +145,13 @@ public class ApplicationModel implements Serializable {
     }
 
     public void saveModelStatus() throws IOException {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("model.bin"); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(binLocation); ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
             objectOutputStream.writeObject(this);
         }
     }
 
     public static ApplicationModel loadModelStatus() throws IOException, ClassNotFoundException {
-        try (FileInputStream fileInputStream = new FileInputStream("model.bin"); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+        try (FileInputStream fileInputStream = new FileInputStream(binLocation); ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             return (ApplicationModel) objectInputStream.readObject();
         }
     }

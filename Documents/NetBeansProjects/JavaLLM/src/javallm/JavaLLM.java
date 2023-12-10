@@ -77,7 +77,7 @@ public class JavaLLM {
             modelCreationMessage = "Estado anterior cargado con éxito.\n";
             view.showApplicationStart("Bienvenido a su jLLM.\n" + modelCreationMessage, modelCreation.getEx());
         } else {
-            modelCreationMessage = "Ocurrió un error durante la carga del estado anterior, se creará uno nuevo.\n";
+            modelCreationMessage = "Parece que es la primera vez que ejecuta el programa, se creará uno nuevo.\n";
             view.showApplicationStart("Bienvenido a su jLLM.\n" + modelCreationMessage, modelCreation.getEx());
         }
 
