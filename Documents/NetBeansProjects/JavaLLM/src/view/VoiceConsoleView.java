@@ -16,7 +16,7 @@ public class VoiceConsoleView extends SimpleConsoleView {
 
     public VoiceConsoleView(ApplicationController controller) {
 
-        super(controller);
+        super(controller, false);
         this.voice = configureVoice();
         if (this.voice != null) {
             this.speechEngine.setVoice(voice.getName());

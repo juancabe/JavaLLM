@@ -93,8 +93,10 @@ public class ApplicationModel implements Serializable {
     }
 
     public void endConversation() {
-        this.conversation.setEndEpoch();
-        conversations.add(this.conversation);
+        if(!this.conversation.getMessagesArray().isEmpty()){
+            this.conversation.setEndEpoch();
+            conversations.add(this.conversation);
+        }
         this.conversation = null;
     }
 
@@ -123,7 +125,6 @@ public class ApplicationModel implements Serializable {
         List<Conversation> importedConversations = repo.importConversations();
         for (Conversation importingConversation : importedConversations) {
             conversations.add(importingConversation);
-            System.out.println(importingConversation.getInitEpochSeconds());
         }
     }
 

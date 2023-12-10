@@ -10,8 +10,28 @@ import java.time.format.DateTimeFormatter;
 
 public class SimpleConsoleView extends ApplicationView {
 
-    public SimpleConsoleView(ApplicationController controller) {
+    public SimpleConsoleView(ApplicationController controller, boolean correctParameters) {
         super(controller);
+        if(!correctParameters){
+            String out = """
+                         Lo siento, parece que has introducido parámetros incorrectos al ejecutar la aplicación. 
+                         Por favor, asegúrate de seguir el formato correcto:
+                         
+                         java -jar jllm.jar repository model view
+                         
+                         Donde:
+                         repository puede ser 'xml' o 'json'.
+                         model puede ser 'fake', 'csv', o 'smart'.
+                         view puede ser 'consola' o 'voz' .
+                         Ejemplo válido:
+                         
+                         java -jar jllm.jar json csv consola
+                         
+                         Recuerda que los parámetros son sensibles a mayúsculas y minúsculas.
+                         Se ha establecido la configuración por defecto: json smart consola
+                         """;
+            System.out.print(out);
+        }
     }
 
     @Override
@@ -87,7 +107,7 @@ public class SimpleConsoleView extends ApplicationView {
                 try {
                     out += " " + controller.getNewMensaje(opcion, instant) + "\n";
                 } catch (Exception e) {
-                    out += "Lo siento, no se que decir. Ha fallado algo.";
+                    out += "Lo siento, no se que decir. Ha fallado algo.\n";
                     System.err.println(e.getMessage());
                 }
                 out(out);
@@ -154,6 +174,7 @@ public class SimpleConsoleView extends ApplicationView {
             out(getListOfConversations());
         } catch (NoConversationException ex) {
             out("No hay conversaciones disponibles para eliminar.\nSaliendo...\n");
+            return;
         }
 
         out("\nIngrese la que quiere eliminar (0 para salir): ");

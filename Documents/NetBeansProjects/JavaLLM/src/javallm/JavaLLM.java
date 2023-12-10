@@ -19,7 +19,7 @@ public class JavaLLM {
             model = modelCreation.getModel();
             view = null;
             controller = new ApplicationController(view, model);
-            view = new SimpleConsoleView(controller);
+            view = new SimpleConsoleView(controller, false);
             controller.setView(view);
         } else {
 
@@ -60,13 +60,13 @@ public class JavaLLM {
             // Comprobar argumento vista
             switch (args[2]) {
                 case "consola":
-                    view = new SimpleConsoleView(controller);
+                    view = new SimpleConsoleView(controller, true);
                     break;
                 case "voz":
                     view = new VoiceConsoleView(controller);
                     break;
                 default:
-                    view = new SimpleConsoleView(controller);
+                    view = new SimpleConsoleView(controller, false);
             }
             controller.setView(view);
         }
